@@ -1,22 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Home from "./pages/Home";
-import ReportingPage from "./pages/Reporting";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './components/ui/MainLayout';
+import AnalyticsOverview from './pages/Analytics';
+import MaterialCount from './pages/MaterialCount';
+import DataManagement from './pages/DataManagement';
+import UserSettings from './pages/UserSettings';
+import CameraManagement from './pages/CameraManagement';
 
-export default function App() {
-  return (
-    <h1 className="text-3xl font-bold">
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/reporting" element={<ReportingPage/>}/>
-        </Routes>
-      </Router>
-    </h1>
-  )
-}
-        
+
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route path="analytics" element={<AnalyticsOverview />} />
+        <Route path="material-count" element={<MaterialCount />} />
+        <Route path="data-management" element={<DataManagement />} />
+        <Route path="user-settings" element={<UserSettings />} />
+        <Route path="camera-management" element={<CameraManagement />} />
+      </Route>
+    </Routes>
+  </Router>
+);
+
+export default App;
