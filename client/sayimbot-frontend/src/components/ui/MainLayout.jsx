@@ -1,32 +1,27 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link,Outlet } from 'react-router-dom';
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col h-screen">
-      {/* Top Bar */}
-      <header className="bg-gray-800 text-white p-4">
-        <h1 className="text-xl font-bold">Dashboard</h1>
-      </header>
-
-      <div className="flex flex-1">
-        {/* Left Sidebar */}
-        <nav className="w-1/4 bg-blue-800 text-white p-4">
-          <h2 className="text-lg font-bold mb-4">Navigation</h2>
-          <ul className="space-y-2">
-            <li>
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <aside className="w-64 bg-blue-900 text-white p-6 shadow-lg">
+        <h1 className="text-2xl font-bold mb-8">Sayarbot</h1>
+        <nav>
+          <ul>
+            <li className="mb-4">
+              <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+            </li>
+            <li className="mb-4">
               <Link to="/analytics" className="hover:underline">Analytics Overview</Link>
             </li>
-            <li>
-              <Link to="/material-count" className="hover:underline">Material Count</Link>
-            </li>
-            <li>
+            <li className="mb-4">
               <Link to="/data-management" className="hover:underline">Data Management</Link>
             </li>
-            <li>
+            <li className="mb-4">
               <Link to="/user-settings" className="hover:underline">User Settings</Link>
             </li>
-            <li>
+            <li className="mb-4">
               <Link to="/camera-management" className="hover:underline">Camera Management</Link>
             </li>
             <li>
@@ -34,12 +29,12 @@ const MainLayout = () => {
             </li>
           </ul>
         </nav>
+      </aside>
 
-        {/* Main Content Area */}
-        <main className="w-3/4 p-4 overflow-y-auto">
-          <Outlet />
-        </main>
-      </div>
+      {/* Main Content */}
+      <main className="flex-1 p-6 overflow-y-auto">
+        <Outlet/>
+      </main>
     </div>
   );
 };

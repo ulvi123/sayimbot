@@ -1,17 +1,27 @@
-import React from "react";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Home() {
-    return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-            <h1 className="text-6xl font-extrabold mb-4 animate__animated animate__fadeInDown">SayimBot-a Xoş Gəlmisiniz</h1>
-            <p className="text-xl mb-8 animate__animated animate__fadeIn">Sizin mükəmməl AI güclü köməkçiniz</p>
-            <button className="px-6 py-3 bg-white text-blue-500 font-semibold rounded-full shadow-md hover:bg-gray-200 transition duration-300 transform hover:scale-105 animate__animated animate__fadeInUp">
-                Başlayın
+const Home = () => {
+  return (
+    <div className="bg-gray-100">
+      <section className="flex flex-col items-center justify-center h-screen bg-blue-900 text-white text-center p-6">
+        <h1 className="text-5xl font-bold mb-4">Welcome to Sayarbot</h1>
+        <p className="text-lg mb-6">Your ultimate data management solution.</p>
+        <div>
+          <Link to="/login">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4">
+              Login
             </button>
-            <p className="mt-4 text-lg animate__animated animate__fadeIn">
-                Xüsusiyyətləri kəşf edin: 
-                <span className="font-bold"> Danış, Öyrən və Avtomatlaşdır!</span>
-            </p>
+          </Link>
+          <Link to="/register">
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Register
+            </button>
+          </Link>
         </div>
-    );
-}
+      </section>
+    </div>
+  );
+};
+
+export default Home;
