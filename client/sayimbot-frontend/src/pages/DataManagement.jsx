@@ -1,11 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:3000'; // Adjust if your NestJS server is on a different port
 
 const DataManagement = () => {
   const [date, setDate] = useState('');
+  const [data, setData] = useState([]);
 
-  const handleGenerate = () => {
-    // Logic to generate data based on the selected date
-    console.log(`Generating data for: ${date}`);
+  useEffect(() => {
+    if (date) {
+      fetchData();
+    }
+  }, [date]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/data-management?date=${date}`);
+      console.log('API response:', response.data);
+      if (Array.isArray(response.data)) {
+        setData(response.data);
+      } else {
+        console.error('Unexpected data format:', response.data);
+        setData([]);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setData([]);
+    }
+  };
+
+  const handleGenerate = async () => {
+    try {
+      await axios.post(`${API_BASE_URL}/data-management/generate`, { date });
+      console.log(`Generating data for: ${date}`);
+      fetchData(); // Fetch updated data after generation
+    } catch (error) {
+      console.error('Error generating data:', error);
+    }
+  };
+
+  const handleExport = async (entry) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/data-management/download?date=${date}`, {
+        responseType: 'blob',
+      });
+
+      const blob = new Blob([response.data], { 
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+      });
+
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = `data_${date}.xlsx`;
+      link.click();
+
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      console.error('Error exporting data:', error);
+    }
   };
 
   return (
@@ -39,31 +91,23 @@ const DataManagement = () => {
           </tr>
         </thead>
         <tbody>
-          {/* Sample data rows */}
-          <tr>
-            <td className="border px-4 py-2">2023-10-01 / 08:09:78</td>
-            <td className="border px-4 py-2">2023-10-01 / 09:09:78</td>
-            <td className="border px-4 py-2">Bread</td>
-            <td className="border px-4 py-2">12,345</td>
-            <td className="border px-4 py-2">xlsx</td>
-            <td className="border px-4 py-2">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                Export Data
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td className="border px-4 py-2">2023-10-01 / 08:09:78</td>
-            <td className="border px-4 py-2">2023-10-01 / 09:09:78</td>
-            <td className="border px-4 py-2">Bread</td>
-            <td className="border px-4 py-2">13,567</td>
-            <td className="border px-4 py-2">xlsx</td>
-            <td className="border px-4 py-2">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                Export Data
-              </button>
-            </td>
-          </tr>
+          {data.map((entry, index) => (
+            <tr key={index}>
+              <td className="border px-4 py-2">{new Date(entry.startTime).toLocaleString()}</td>
+              <td className="border px-4 py-2">{new Date(entry.endTime).toLocaleString()}</td>
+              <td className="border px-4 py-2">{entry.material}</td>
+              <td className="border px-4 py-2">{entry.count.toLocaleString()}</td>
+              <td className="border px-4 py-2">{entry.format}</td>
+              <td className="border px-4 py-2">
+                <button 
+                  onClick={() => handleExport(entry)}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                >
+                  Export Data
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
