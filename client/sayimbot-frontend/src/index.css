@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.camera-management-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.control-panel input, .control-panel button {
+  transition: all 0.3s ease;
+}
+
+.control-panel input:focus, .control-panel button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(66, 153, 225, 0.6);
+}
