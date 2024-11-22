@@ -1,5 +1,5 @@
 // data-management.controller.ts
-import { Controller, Get, Post, Body, Query, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Res, Header } from '@nestjs/common';
 import { DataManagementService } from './data-management.service';
 import { Response } from 'express';
 
@@ -18,13 +18,18 @@ export class DataManagementController {
         return this.dataManagementService.generateData(date);
     }
     @Get('download')
+    @Header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    @Header('Content-Disposition', 'attachment; filename="bread_production_data.xlsx"')
     async downloadExcel(@Query('date') date: string, @Res() res: Response) {
-        const buffer = await this.dataManagementService.generateExcelFile(date);
-
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', `attachment; filename="data_${date}.xlsx"`);
-        res.setHeader('Content-Length', buffer.length.toString());
-
-        res.end(buffer);
+        console.log('Received download request for date:', date);
+        try {
+            console.log('Generating Excel file...');
+            const buffer = await this.dataManagementService.generateExcelFile(date);
+            console.log('Excel file generated successfully');
+            res.send(buffer);
+        } catch (error) {
+            console.error('Error generating Excel file:', error);
+            res.status(500).json({ message: 'Error generating Excel file', error: error.message, stack: error.stack });
+        }
     }
 }

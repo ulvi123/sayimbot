@@ -1,17 +1,18 @@
-import { Controller, Post, Body, BadRequestException, InternalServerErrorException, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException, InternalServerErrorException, HttpCode, HttpStatus, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { isInstance } from 'class-validator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
   @Post('register')
-  register(@Body() registerDto: RegisterDto) {
+  async register(@Body() registerDto: RegisterDto) {
     try {
-      const result = this.authService.register(registerDto);
-      return result
+      const result = await this.authService.register(registerDto);
+      return result;
     } catch (error) {
       console.error('Registration error:', error);
       if (error instanceof BadRequestException) {
@@ -23,7 +24,17 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  async login(@Body() loginDto: LoginDto) {
+    try {
+      const result = await this.authService.login(loginDto);
+      console.log('Login result:', result);
+      return result;
+    } catch (error) {
+      console.error('Login error:', error);
+      if (error instanceof UnauthorizedException) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+      throw new InternalServerErrorException('An error occurred during login');
+    }
   }
 }

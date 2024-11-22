@@ -11,7 +11,7 @@ import { access } from 'fs';
 export class AuthService {
   private users: any[] = [];
 
-  constructor(private prisma: PrismaService,private jwtService: JwtService) { }
+  constructor(private prisma: PrismaService, private jwtService: JwtService) { }
 
   async register(registerDto: RegisterDto) {
     const { username, email, password } = registerDto;
@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     try {
-      const newUser= await this.prisma.user.create({
+      const newUser = await this.prisma.user.create({
         data: {
           username,
           email,
@@ -49,31 +49,32 @@ export class AuthService {
 
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
-
-    const user = await this.prisma.user.findUnique({
-      where: { email }
-    })
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if(!user) {
-      throw new UnauthorizedException('User not found')
+    console.log('Attempting login for:', email);
+  
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      console.log('User not found');
+      throw new UnauthorizedException('Invalid credentials');
     }
-
-    // Generate JWT token
+  
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log('Invalid password');
+      throw new UnauthorizedException('Invalid credentials');
+    }
+  
     const payload = { sub: user.id, email: user.email };
-    const token = this.jwtService.sign(payload);
-
+    const accessToken = this.jwtService.sign(payload);
+  
+    console.log('Login successful, token generated');
     return { 
-      access_token: token,
-      user:{
-        id:user.id,
-        email:user.email,
-        username:user.username
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username
       }
-     };
-
-
-
+    };
   }
 
 
