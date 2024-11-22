@@ -24,7 +24,7 @@ const DataManagement = () => {
         setData([]);
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching the data:', error);
       setData([]);
     }
   };
