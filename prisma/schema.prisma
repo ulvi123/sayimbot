@@ -21,6 +21,8 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  lastLogout DateTime? 
+  BlacklistedToken BlacklistedToken[]
 }
 
 
@@ -32,4 +34,15 @@ model DataEntry {
   count      Int
   format     String
   createdAt  DateTime @default(now())
+}
+
+
+model BlacklistedToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }

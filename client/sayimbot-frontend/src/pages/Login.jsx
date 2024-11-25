@@ -4,7 +4,7 @@ import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const API_URL = 'http://localhost:3000'; // Adjust this to your NestJS server URL
+    const API_BASE_URL = 'http://localhost:3000'; // Adjust this to your NestJS server URL
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${API_URL}/auth/login`, {
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,8 +29,8 @@ const Login = () => {
 
             console.log('Login response:', data);
             if (data.accessToken) {
-                localStorage.setItem('token', data.accessToken);
-                localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('accessToken', data.accessToken);
+                console.log('AccessToken stored in localStorage:', localStorage.getItem('accessToken'));
                 setShowModal(true);
                 // Handle user data
                 const userData = data.users; // or data.user, depending on your backend
