@@ -47,19 +47,20 @@ const MainLayout = () => {
               <Link to="/dashboard" className="hover:underline">Dashboard</Link>
             </li>
             <li className="mb-4">
-              <Link to="/analytics" className="hover:underline">Analytics Overview</Link>
+              <Link to="/analytics" className="hover:underline">Analitika</Link>
             </li>
             <li className="mb-4">
-              <Link to="/data-management" className="hover:underline">Data Management</Link>
+              <Link to="/data-management" className="hover:underline">Data Menecmenti</Link>
             </li>
             <li className="mb-4">
-              <Link to="/user-settings" className="hover:underline">User Settings</Link>
+              <Link to="/user-settings" className="hover:underline">İstifadəçi Ayarlari
+              </Link>
             </li>
             <li className="mb-4">
-              <Link to="/camera-management" className="hover:underline">Camera Management</Link>
+              <Link to="/camera-management" className="hover:underline">Kamera Menecment</Link>
             </li>
             <li>
-            <button onClick={handleLogout} className="hover:underline">Logout</button>
+            <button onClick={handleLogout} className="hover:underline">Çıxış</button>
             </li>
           </ul>
         </nav>
