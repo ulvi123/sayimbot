@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import exp from 'constants';
 
 
 @Injectable()
@@ -63,7 +64,7 @@ export class AuthService {
     }
 
     const payload = { sub: user.id, email: user.email };
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '3153600000s' });
 
     console.log('Login successful, token generated');
     return {

@@ -7,6 +7,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { DataManagementController } from './data-management/data-management.controller';
 import { DataManagementService } from './data-management/data-management.service';
 import { PrismaService } from './prisma/prisma.service';
+import { CameraService } from './camera/camera.service';
+import { CameraController } from './camera/camera.controller';
+import { CameraModule } from './camera/camera.module';
+
 import * as path from 'path';
 
 
@@ -19,9 +23,10 @@ import * as path from 'path';
       envFilePath: path.resolve(__dirname, '..', '.env'),
       cache: false,
     }),
+    CameraModule,
   ],
-  controllers: [AppController,DataManagementController],
-  providers: [AppService,DataManagementService,PrismaService],
+  controllers: [AppController,DataManagementController, CameraController],
+  providers: [AppService,DataManagementService,PrismaService, CameraService],
 })
 
 
