@@ -19,8 +19,10 @@ const Dashboard = () => {
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-        <p className="text-gray-600">Welcome to the Sayarbot Dashboard, your central overview of system performance and user activities.</p>
+        <h1 className="text-3xl font-bold text-gray-800">Idarə paneli
+        </h1>
+        <p className="text-gray-600">
+          Sistem performansı və istifadəçi fəaliyyətləri haqqında mərkəzi icmalınız olan Sayarbot İdarə Panelinə xoş gəlmisiniz.</p>
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -41,7 +43,8 @@ const Dashboard = () => {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Recent Activities</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Son Fəaliyyətlər
+        </h2>
         <ul className="bg-white p-6 rounded-lg shadow-md">
           {recentActivities.map((activity, index) => (
             <li key={index} className="text-gray-700 mb-2">

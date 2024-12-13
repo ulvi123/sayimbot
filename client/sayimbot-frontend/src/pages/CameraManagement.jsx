@@ -59,8 +59,8 @@ const CameraManagement = () => {
   };
 
   const handleActivate = async () => {
-    if (!selectedCamera) {
-      setError("No camera selected");
+    if (!selectedCamera || !selectedCamera.id) {
+      setError("No valid camera selected");
       return;
     }
 
