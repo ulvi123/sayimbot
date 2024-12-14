@@ -65,9 +65,6 @@ export class DataManagementService {
         }
     }
 
-
-
-
     async getData(date: string) {
         const startOfDay = new Date(date);
         const endOfDay = new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000);

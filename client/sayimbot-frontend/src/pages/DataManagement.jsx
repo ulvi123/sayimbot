@@ -41,11 +41,11 @@ const DataManagement = () => {
 
   const handleExport = async () => {
     if(!date || date.trim() === '') {
-      alert('Please enter a valid date.');
+      alert('Etibarlı tarix daxil edin..');
       return;
     }
     try {
-      console.log('Attempting to export data for date:', date);
+      console.log('Tarix üçün məlumat ixrac etməyə cəhd:', date);
       const response = await axios.get(`${API_BASE_URL}/data-management/download`, {
         params: { date: date },
         responseType: 'blob',
@@ -92,9 +92,9 @@ const DataManagement = () => {
 
   return (
     <div className="flex flex-col p-4">
-      <h1 className="text-3xl font-bold mb-4">Reporting</h1>
+      <h1 className="text-3xl font-bold mb-4">Hesabat</h1>
       <div className="flex items-center mb-6">
-        <label className="mr-2">Manage Your Data</label>
+        <label className="mr-2">Məlumatlarınızı İdarə Edin</label>
         <input
           type="date"
           value={date}
@@ -120,16 +120,18 @@ const DataManagement = () => {
           Export Data
         </button>
       </div>
-      <h2 className="text-xl font-semibold mb-2">Data Overview</h2>
+      <h2 className="text-xl font-semibold mb-2">Verilənlərə Baxış
+      </h2>
       <table className="min-w-full border">
         <thead>
           <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Start time</th>
-            <th className="border px-4 py-2">End time</th>
+            <th className="border px-4 py-2">Başlama vaxtı</th>
+            <th className="border px-4 py-2">
+            Bitmə vaxtı</th>
             <th className="border px-4 py-2">Material</th>
-            <th className="border px-4 py-2">Count</th>
+            <th className="border px-4 py-2">Say</th>
             <th className="border px-4 py-2">Format</th>
-            <th className="border px-4 py-2">Action</th>
+            <th className="border px-4 py-2">Fəaliyyət</th>
           </tr>
         </thead>
         <tbody>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
 const API_BASE_URL = 'http://localhost:3000';
 const UserSettings = () => {
-  
+
 
   const [user, setUser] = useState(
     {
@@ -69,13 +69,13 @@ const UserSettings = () => {
 
   return (
     <div className="flex flex-col items-start p-4 max-w-md mx-auto">
-      <h1 className="text-3xl font-bold mb-2">User Settings</h1>
-      <p className="mb-6 text-gray-600">Edit Your Settings</p>
+      <h1 className="text-3xl font-bold mb-2">İstifadəçi parametrləri</h1>
+      <p className="mb-6 text-gray-600">Parametrlərinizi dəyişdirin</p>
       {message && <p className="mb-4 text-green-600">{message}</p>}
       <form className="w-full" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-            Username
+            İstifadəçi adı
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -89,7 +89,7 @@ const UserSettings = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-            Email
+            E-poçt
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -103,7 +103,7 @@ const UserSettings = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-            New Password
+            Yeni Şifrə
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -119,7 +119,7 @@ const UserSettings = () => {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           type="submit"
         >
-          Save Changes
+          Dəyişiklikləri Saxla
         </button>
       </form>
     </div>

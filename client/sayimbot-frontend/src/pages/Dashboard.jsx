@@ -4,16 +4,16 @@ import { FaUsers, FaEye, FaClipboardList } from 'react-icons/fa';
 
 const Dashboard = () => {
   const stats = [
-    { id: 1, icon: <FaUsers />, label: 'Total Users', value: '1,200' },
-    { id: 2, icon: <FaEye />, label: 'Total Views', value: '45,000' },
-    { id: 3, icon: <FaClipboardList />, label: 'Reports Generated', value: '320' },
+    { id: 1, icon: <FaUsers />, label: 'Ümumi istifadəçilər', value: '3' },
+    { id: 2, icon: <FaEye />, label: 'Ümumi baxışlar', value: '200' },
+    { id: 3, icon: <FaClipboardList />, label: 'Yaradılmış hesabatlar', value: '20' },
   ];
 
   const recentActivities = [
-    'User JaneDoe viewed Report #567',
-    'System backup completed successfully.',
-    'New data sync with the database was successful.',
-    'User MikeDoe accessed Camera Feed 2.',
+    'İstifadəçi Cavidan Baloglanov Hesabat №2-yə baxdı',
+    'Sistemin ehtiyat köçürməsi uğurla başa çatdı.',
+    'Məlumat bazası ilə yeni sinxronlaşdırma həyata keçirildi.',
+    'İstifadəçi Cavidan Baloglanov Kamera Görüntüsü 1-ə daxil oldu.',
   ];
 
   return (
@@ -55,14 +55,12 @@ const Dashboard = () => {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Data Insights</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Məlumatlar</h2>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <p className="text-gray-600 mb-4">
-            Here you can display summaries, trends, or key insights derived from your data.
-          </p>
+            Burada məlumatlarınızdan alınan xülasələri, meylləri və ya əsas anlayışları göstərə bilərsiniz.          </p>
           <p className="text-gray-700">
-            For instance, trends in camera usage, analytics summaries, or system performance metrics can be shown here as the data becomes available.
-          </p>
+            Məsələn, kamera istifadəsi, analitik xülasələr və ya sistem performans göstəriciləri ilə bağlı tendensiyalar burada göstərilir.          </p>
         </div>
       </section>
     </div>

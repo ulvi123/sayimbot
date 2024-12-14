@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -85,17 +84,20 @@ const Login = () => {
                 </form>
 
             </div>
-            <Modal show={showModal} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Login Successful</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>You have successfully logged in!</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handleCloseModal}>
-                        Go to Dashboard
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {showModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-xl text-center">
+                        <h2 className="text-2xl font-bold mb-4">Daxil Olma Uğurlu Oldu</h2>
+                        <p className="mb-6">Sistemə uğurla daxil oldunuz!</p>
+                        <button 
+                            onClick={handleCloseModal}
+                            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                        >
+                            İdarə Panelə Keçid
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
 
     );
