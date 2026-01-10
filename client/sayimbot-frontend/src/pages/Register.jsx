@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const API_URL = 'http://localhost:3000';
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const response = await fetch('/register', {
+        try {
+          const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify({ username, email, password }),
-        });
-        const data = await response.json();
-        alert(data.message);
-    };
+          });
+      
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          const data = await response.json();
+          console.log('Registration successful:', data);
+          alert('Registration successful!Please log in to continue to the platform');
+          // Handle successful registration (e.g., redirect to login page)
+          navigate('/login');
+        } catch (error) {
+          console.error('Registration error:', error);
+          // Handle registration error (e.g., show error message to user)
+        }
+      };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-blue-500">

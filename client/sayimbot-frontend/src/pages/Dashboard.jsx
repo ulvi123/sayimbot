@@ -4,23 +4,25 @@ import { FaUsers, FaEye, FaClipboardList } from 'react-icons/fa';
 
 const Dashboard = () => {
   const stats = [
-    { id: 1, icon: <FaUsers />, label: 'Total Users', value: '1,200' },
-    { id: 2, icon: <FaEye />, label: 'Total Views', value: '45,000' },
-    { id: 3, icon: <FaClipboardList />, label: 'Reports Generated', value: '320' },
+    { id: 1, icon: <FaUsers />, label: 'Ümumi istifadəçilər', value: '3' },
+    { id: 2, icon: <FaEye />, label: 'Ümumi baxışlar', value: '200' },
+    { id: 3, icon: <FaClipboardList />, label: 'Yaradılmış hesabatlar', value: '20' },
   ];
 
   const recentActivities = [
-    'User JaneDoe viewed Report #567',
-    'System backup completed successfully.',
-    'New data sync with the database was successful.',
-    'User MikeDoe accessed Camera Feed 2.',
+    'İstifadəçi Cavidan Baloglanov Hesabat №2-yə baxdı',
+    'Sistemin ehtiyat köçürməsi uğurla başa çatdı.',
+    'Məlumat bazası ilə yeni sinxronlaşdırma həyata keçirildi.',
+    'İstifadəçi Cavidan Baloglanov Kamera Görüntüsü 1-ə daxil oldu.',
   ];
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-        <p className="text-gray-600">Welcome to the Sayarbot Dashboard, your central overview of system performance and user activities.</p>
+        <h1 className="text-3xl font-bold text-gray-800">Idarə paneli
+        </h1>
+        <p className="text-gray-600">
+          Sistem performansı və istifadəçi fəaliyyətləri haqqında mərkəzi icmalınız olan Sayarbot İdarə Panelinə xoş gəlmisiniz.</p>
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -41,7 +43,8 @@ const Dashboard = () => {
       </section>
 
       <section className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Recent Activities</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Son Fəaliyyətlər
+        </h2>
         <ul className="bg-white p-6 rounded-lg shadow-md">
           {recentActivities.map((activity, index) => (
             <li key={index} className="text-gray-700 mb-2">
@@ -52,14 +55,12 @@ const Dashboard = () => {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Data Insights</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Məlumatlar</h2>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <p className="text-gray-600 mb-4">
-            Here you can display summaries, trends, or key insights derived from your data.
-          </p>
+            Burada məlumatlarınızdan alınan xülasələri, meylləri və ya əsas anlayışları göstərə bilərsiniz.          </p>
           <p className="text-gray-700">
-            For instance, trends in camera usage, analytics summaries, or system performance metrics can be shown here as the data becomes available.
-          </p>
+            Məsələn, kamera istifadəsi, analitik xülasələr və ya sistem performans göstəriciləri ilə bağlı tendensiyalar burada göstərilir.          </p>
         </div>
       </section>
     </div>

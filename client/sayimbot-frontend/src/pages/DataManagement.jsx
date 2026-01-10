@@ -24,7 +24,7 @@ const DataManagement = () => {
         setData([]);
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching the data:', error);
       setData([]);
     }
   };
@@ -39,32 +39,62 @@ const DataManagement = () => {
     }
   };
 
-  const handleExport = async (entry) => {
+  const handleExport = async () => {
+    if(!date || date.trim() === '') {
+      alert('Etibarlı tarix daxil edin..');
+      return;
+    }
     try {
-      const response = await axios.get(`${API_BASE_URL}/data-management/download?date=${date}`, {
+      console.log('Tarix üçün məlumat ixrac etməyə cəhd:', date);
+      const response = await axios.get(`${API_BASE_URL}/data-management/download`, {
+        params: { date: date },
         responseType: 'blob',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}` // Include if you're using authentication
+        }
       });
 
-      const blob = new Blob([response.data], { 
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
-      });
+      console.log('Response received:', response);
 
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const downloadUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = `data_${date}.xlsx`;
+      link.href = downloadUrl;
+      link.download = `bread_production_data_${date}.xlsx`;
+      document.body.appendChild(link);
       link.click();
-
-      window.URL.revokeObjectURL(link.href);
+      link.remove();
     } catch (error) {
       console.error('Error exporting data:', error);
+      if (error.response) {
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+        if (error.response.data instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            console.error('Response data:', reader.result);
+          };
+          reader.readAsText(error.response.data);
+        } else {
+          console.error('Response data:', error.response.data);
+        }
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error setting up request:', error.message);
+      }
+      alert('Failed to export data. Please check the console for more details and try again.');
     }
   };
 
+
+
+
   return (
     <div className="flex flex-col p-4">
-      <h1 className="text-3xl font-bold mb-4">Reporting</h1>
+      <h1 className="text-3xl font-bold mb-4">Hesabat</h1>
       <div className="flex items-center mb-6">
-        <label className="mr-2">Manage Your Data</label>
+        <label className="mr-2">Məlumatlarınızı İdarə Edin</label>
         <input
           type="date"
           value={date}
@@ -77,17 +107,31 @@ const DataManagement = () => {
         >
           Generate
         </button>
+        <button
+              onClick={handleExport}
+              disabled={!date || data.length === 0}
+              className={`
+                text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out shadow-md w-full sm:w-auto
+                  ${(date && data.length > 0)
+                  ? 'bg-blue-500 hover:bg-blue-600 hover:shadow-lg'
+                  : 'bg-gray-400 cursor-not-allowed'}
+              `}
+        >
+          Export Data
+        </button>
       </div>
-      <h2 className="text-xl font-semibold mb-2">Data Overview</h2>
+      <h2 className="text-xl font-semibold mb-2">Verilənlərə Baxış
+      </h2>
       <table className="min-w-full border">
         <thead>
           <tr className="bg-gray-200">
-            <th className="border px-4 py-2">Start time</th>
-            <th className="border px-4 py-2">End time</th>
+            <th className="border px-4 py-2">Başlama vaxtı</th>
+            <th className="border px-4 py-2">
+            Bitmə vaxtı</th>
             <th className="border px-4 py-2">Material</th>
-            <th className="border px-4 py-2">Count</th>
+            <th className="border px-4 py-2">Say</th>
             <th className="border px-4 py-2">Format</th>
-            <th className="border px-4 py-2">Action</th>
+            <th className="border px-4 py-2">Fəaliyyət</th>
           </tr>
         </thead>
         <tbody>
@@ -99,12 +143,6 @@ const DataManagement = () => {
               <td className="border px-4 py-2">{entry.count.toLocaleString()}</td>
               <td className="border px-4 py-2">{entry.format}</td>
               <td className="border px-4 py-2">
-                <button 
-                  onClick={() => handleExport(entry)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                >
-                  Export Data
-                </button>
               </td>
             </tr>
           ))}
